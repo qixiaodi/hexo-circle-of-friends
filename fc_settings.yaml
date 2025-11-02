@@ -18,7 +18,7 @@ LINK: [
      { link: "https://blog.qixiao.hidns.co/link/", theme: "anzhiyu" },  # 友链页地址1，修改为你的友链页地址
      { link: "https://blog.anheyu.com/link", theme: "anzhiyu" }, # 友链页地址2
      { link: "https://immmmm.com/about/", theme: "common1" }, # 友链页地址3
-     { link: "https://blog.zhheo.com/link/", theme: "common2" }
+     { link: "https://blog.zhheo.com/link/", theme: "common2" },
 #     ...
 ]
 
