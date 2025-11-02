@@ -1,0 +1,122 @@
+# 友链页地址
+# 参数说明：
+# link：必填，在这里填写你的友链页面地址
+# theme：必填，友链页的获取策略。需要指定该页面的主题，可选参数如下（这些是目前支持的主题）：
+#   - common1: 通用主题1，请参考：https://fcircle-doc.yyyzyyyz.cn/docs/advanced.html
+#   - common2: 通用主题2，请参考：https://fcircle-doc.yyyzyyyz.cn/docs/advanced.html
+#   - butterfly：butterfly主题
+#   - fluid：fluid主题
+#   - matery：matery主题
+#   - nexmoe：nexmoe主题
+#   - stun：stun主题
+#   - sakura: sakura主题
+#   - volantis：volantis主题
+#   - Yun：Yun主题
+#   - stellar：stellar主题
+# 支持配置多个友链页面并指定不同主题策略，每个用{}分隔，它们会被同时爬取，数据保存在一起。
+LINK: [
+     { link: "https://blog.qixiao.hidns.co/link/", theme: "common2" },  # 友链页地址1，修改为你的友链页地址
+     { link: "https://blog.anheyu.com/link", theme: "anzhiyu" }, # 友链页地址2
+     { link: "https://immmmm.com/about/", theme: "common1" }, # 友链页地址3
+#     ...
+]
+
+# 配置项友链
+# enable：# 是否启用配置项友链 true/false（针对还未适配主题或者有定制需求的用户）
+# json_api_or_path：支持通过提供 json 格式的友链配置，可以是本地文件路径，或者是一个 url 地址。详见：https://fcircle-doc.yyyzyyyz.cn/docs/configuration.html
+# list字段填写格式：["name", "link", "avatar","suffix"]，其中：
+#       name：必填，友链的名字
+#       link：必填，友链主页地址
+#       avatar：必填，头像地址
+#       suffix：选填，自定义订阅后缀，主要针对不规范的网站订阅后缀，见示例2
+SETTINGS_FRIENDS_LINKS: {
+    enable: false,
+    json_api_or_path: "",
+    list: [
+        # 示例1：
+        # ["贰猹の小窝", "https://noionion.top/", "https://pub-noionion.oss-cn-hangzhou.aliyuncs.com/head.jpg"],
+        # ["Akilarの糖果屋", "https://akilar.top/", "https://akilar.top/images/headimage.png"],
+        # 示例2：使用suffix的配置如下
+        # 程序目前自动获取 "atom.xml", "feed/atom", "rss.xml", "rss2.xml", "feed", "index.xml" 这些后缀
+        # 如果目标地址的后缀不在其中，就可以在这里添加
+        # 比如 https://elizen.me/hello.xml ，填写：
+        # ["elizen", "https://elizen.me/", "https://akilar.top/images/headimage.png", "hello.xml"]
+    ]
+}
+
+# block site list
+# 添加屏蔽站点，支持正则表达式
+BLOCK_SITE: [
+#    "https?://example.com/", # http或https
+#    https://example.com/, # 屏蔽 https://example.com/
+#    .*\.com,  # 含有.com的全部屏蔽
+#    ^http://,  # http://开头的全部屏蔽
+]
+
+# 是否反向屏蔽站点，true表示反向屏蔽，false表示正向屏蔽
+BLOCK_SITE_REVERSE: false
+
+# 从每个主页中最多获取几篇文章，请设置一个正整数
+# 设置为0表示无限制
+MAX_POSTS_NUM:  5
+
+# 如果要启用HTTP代理：
+# 对于github部署：添加secret
+# 对于自托管部署：添加环境变量
+# 名称为PROXY，值为[IP]:[端口]或代理地址，比如：192.168.1.106:8080
+
+# 过期文章清除（天）
+OUTDATE_CLEAN: 60
+
+# 定时任务，每天0点、6点、12点、18点、21点执行一次
+CRON: "0 0,6,12,18,21 * * *"
+
+# 极简模式是否开启
+SIMPLE_MODE: false
+
+# 5.x以后默认为sqlite
+# 存储方式，可选项：mysql，sqlite，mongodb；默认为sqlite
+DATABASE: "sqlite"
+
+# 部署方式，可选项：github，server；默认为github
+DEPLOY_TYPE: "github"
+
+# 文章摘要
+# 参考: https://fcircle-doc.yyyzyyyz.cn/docs/configuration.html
+GENERATE_SUMMARY: {
+  enabled: false,   # 需要设置为true开启
+  provider: "all",  # AI供应商，目前可选：gemini|siliconflow|bigmodel|all （使用 "all" 依次全部尝试），需要配置对应提供商的api key
+  max_concurrent: 3,       # 最大并发数，默认3 (平衡速度与稳定性)
+  wait_on_rate_limit: true, # 遇限速是否等待，默认true (提高成功率)
+  max_chars: 8000,         # 最大字符数，默认8000 (适合大部分模型)
+  # google gemini：https://ai.google.dev/gemini-api/docs/models?hl=zh-cn
+  # 注意：国内访问需要添加代理
+  gemini: {
+    models: ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.5-flash-lite"]
+  },
+  # 硅基流动（siliconflow）
+  # 以下列出的是其中的免费模型，你也可以去官方文档寻找并添加付费模型：https://cloud.siliconflow.cn/me/models
+  siliconflow: {
+    models: [
+      "THUDM/GLM-4.1V-9B-Thinking",
+      "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B", 
+      "Qwen/Qwen3-8B",
+      "THUDM/GLM-Z1-9B-0414",
+      "THUDM/GLM-4-9B-0414",
+      "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+      "Qwen/Qwen2.5-7B-Instruct",
+      "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "internlm/internlm2_5-7b-chat",
+      "Qwen/Qwen2-7B-Instruct",
+      "THUDM/glm-4-9b-chat"
+    ]
+  },
+  # 智谱（bigmodel）
+  # 以下列出的是其中的免费模型，你也可以去官方文档寻找并添加付费模型：https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5
+  bigmodel: {
+    models: [
+      "glm-4.5-flash",
+      "glm-4-flash-250414"
+    ]
+  }
+}
